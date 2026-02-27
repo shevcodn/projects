@@ -4,7 +4,7 @@
 
 ### Denis Shevchenko · [shevcodn.dev](https://shevcodn.dev)
 
-[![Python](https://img.shields.io/badge/Python-3.11-00ff88?style=flat-square&logo=python&logoColor=black)](https://python.org)
+[![Python](https://img.shields.io/badge/Python-3.12-00ff88?style=flat-square&logo=python&logoColor=black)](https://python.org)
 [![Status](https://img.shields.io/badge/Status-Active_Development-00ff88?style=flat-square)](https://github.com/shevcodn/projects)
 [![Projects](https://img.shields.io/badge/Projects-1_of_7-00ff88?style=flat-square)](https://github.com/shevcodn/projects)
 
