@@ -54,6 +54,7 @@ class StockPortfolio:
     def __init__(self):
         self.holdings = {}
         self.history = TransactionHistory()
+        self.balance = 10000.0
 
     def is_market_open(self):
         et = pytz.timezone('America/New_York')
@@ -91,6 +92,10 @@ class StockPortfolio:
 
 
     def add(self, ticker, qty, price):
+        cost = qty * price
+        if cost > self.balance:
+            print(f"✗ Insufficient funds. Need ${cost:.2f}, have ${self.balance:.2f}")
+            return
         if ticker in self.holdings:
             old_qty = self.holdings[ticker]["qty"]
             old_avg = self.holdings[ticker]["avg_price"]
@@ -100,7 +105,8 @@ class StockPortfolio:
         else:
             self.holdings[ticker] = {"qty": qty, "avg_price": price}
         self.history.add("BUY", ticker, qty, price)
-        print(f"Bought {qty} shares of {ticker} at ${price:.2f}")
+        self.balance -= cost
+        print(f"✓ Bought {qty} {ticker} @ ${price:.2f} | Balance: ${self.balance:.2f}")
 
 
     def sell(self, ticker, qty):
@@ -114,9 +120,11 @@ class StockPortfolio:
         if self.holdings[ticker]["qty"] == 0:
             del self.holdings[ticker]
         price = self.get_market_price(ticker)
+        proceeds = round(price * qty, 2) if price else 0
+        self.balance += proceeds
         self.history.add("SELL", ticker, qty, price)
-        price_str = f"${price:.2f}" if price else "market closed"
-        print(f"✓ Sold {qty} {ticker} at {price_str}")
+        price_str = f"${price:.2f}" if price else "N/A"
+        print(f"✓ Sold {qty} {ticker} @ {price_str} | Balance: ${self.balance:.2f}")
 
 
     def portfolio(self):
@@ -161,14 +169,44 @@ class StockPortfolio:
         
 if __name__ == "__main__":
     p = StockPortfolio()
-    p.add("AAPL", 10, 150)
-    p.add("NVDA", 5, 800.0)
-    p.add("AAPL", 5, 160.0)
-    p.sell("TSLA", 1)
-    p.sell("AAPL", 20)
-    p.sell("NVDA", 5)
-    p.portfolio()
-    p.history_for("AAPL")
-    p.top(2)
+    print("=" * 55)
+    print("  Stock Portfolio Tracker | Balance: $10,000.00")
+    print("=" * 55)
+    print("Commands: buy TICKER QTY | sell TICKER QTY")
+    print("          portfolio | history TICKER | top N | quit")
+    print("Available: AAPL NVDA TSLA MSFT GOOGL AMZN META AMD NFLX")
+    print("=" * 55)
+
+    while True:
+        try:
+            cmd = input("\n> ").strip().split()
+        except (EOFError, KeyboardInterrupt):
+            print("\nGoodbye!")
+            break
+
+        if not cmd:
+            continue
+
+        action = cmd[0].lower()
+
+        if action == "quit":
+            print("Goodbye!")
+            break
+        elif action == "buy" and len(cmd) == 3:
+            price = p.get_market_price(cmd[1].upper())
+            if not price:
+                print(f"✗ Unknown ticker: {cmd[1].upper()}")
+            else:
+                p.add(cmd[1].upper(), int(cmd[2]), price)
+        elif action == "sell" and len(cmd) == 3:
+            p.sell(cmd[1].upper(), int(cmd[2]))
+        elif action == "portfolio":
+            p.portfolio()
+        elif action == "history" and len(cmd) == 2:
+            p.history_for(cmd[1].upper())
+        elif action == "top" and len(cmd) == 2:
+            p.top(int(cmd[2]))
+        else:
+            print("Unknown command. Try: buy AAPL 5 | sell AAPL 3 | portfolio | history AAPL | top 3 | quit")
 
 
