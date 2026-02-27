@@ -17,12 +17,12 @@
 | # | Project | Stack | Try it | Status |
 |---|---------|-------|--------|--------|
 | 01 | [Stock Portfolio Tracker](./stock-portfolio-tracker/) | Python · Alpha Vantage API · LinkedList · HashMap | [▶ Live demo](https://shevcodn.dev/#projects) | ✅ Done |
-| 02 | Stock Portfolio API | FastAPI · PostgreSQL · SQLAlchemy | — | 🔜 p700 |
-| 03 | Real-time Dashboard | WebSockets · Redis · React | — | 🔜 p800 |
-| 04 | Microservice + CI/CD | Docker · GitHub Actions · Railway | — | 🔜 p900 |
-| 05 | Secure API | JWT · OAuth · Railway deploy | — | 🔜 p960 |
-| 06 | Full Stack App | FastAPI · PostgreSQL · Docker | — | 🔜 p980 |
-| 07 | Final Showcase | TBD | — | 🔜 p1000 |
+| 02 | TradeLedger API | FastAPI · PostgreSQL · SQLAlchemy | — | 🔜 p700 |
+| 03 | MarketPulse | WebSockets · Redis · React | — | 🔜 p800 |
+| 04 | DeployKit | Docker · GitHub Actions · Railway | — | 🔜 p900 |
+| 05 | AuthVault | JWT · OAuth · Railway deploy | — | 🔜 p960 |
+| 06 | WealthTrack | FastAPI · PostgreSQL · Docker | — | 🔜 p980 |
+| 07 | PortfolioOS | TBD | — | 🔜 p1000 |
 
 ---
 
