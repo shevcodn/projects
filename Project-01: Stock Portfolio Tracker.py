@@ -8,6 +8,18 @@ from dotenv import load_dotenv
 price_cache = {}
 CACHE_TTL = 3900
 
+FALLBACK_PRICES = {
+    "AAPL": 272.84,
+    "NVDA": 185.09,
+    "TSLA": 408.38,
+    "MSFT": 401.86,
+    "GOOGL": 308.06,
+    "AMZN": 207.95,
+    "NFLX": 985.33,
+    "META": 657.01,
+    "AMD":  203.68,
+}
+
 load_dotenv()
 API_KEY = os.getenv("ALPHA_VANTAGE_KEY")
 
@@ -63,7 +75,7 @@ class StockPortfolio:
         if not self.is_market_open():
             if ticker in price_cache:
                 return price_cache[ticker][0]
-            return None
+            return FALLBACK_PRICES.get(ticker)
 
         try:
             url = f'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={ticker}&apikey={API_KEY}'
@@ -101,22 +113,62 @@ class StockPortfolio:
         self.holdings[ticker]["qty"] -= qty
         if self.holdings[ticker]["qty"] == 0:
             del self.holdings[ticker]
-        self.history.add("SELL", ticker, qty, self.get_market_price(ticker))
-        print(f"Sold {qty} shares of {ticker} at ${self.get_market_price(ticker):.2f}")
+        price = self.get_market_price(ticker)
+        self.history.add("SELL", ticker, qty, price)
+        price_str = f"${price:.2f}" if price else "market closed"
+        print(f"✓ Sold {qty} {ticker} at {price_str}")
 
 
     def portfolio(self):
         print("Current Portfolio:")
-        for ticker, qty in self.holdings.items():
+        for ticker, data in self.holdings.items():
+            qty = data["qty"]
             transactions = self.history.get_for_ticker(ticker)
             total_cost = sum(tx.price * tx.qty for tx in transactions if tx.action == "BUY")
             total_qty = sum(tx.qty for tx in transactions if tx.action == "BUY")
             avg_price = total_cost / total_qty if total_qty > 0 else 0
 
             price = self.get_market_price(ticker)
-            value = price * qty if price else "N/A"
-            print(f"{ticker}: {qty} shares, Current price: ${price:.2f} "
-                  f"Value: ${value if value != 'N/A' else 'N/A'}")
-            pnl = (price - avg_price) * qty if price else "N/A"
-            print(f"  P&L: ${pnl if pnl != 'N/A' else 'N/A'}")
+            price_str = f"${price:.2f}" if price else "N/A"
+            value = round(price * qty, 2) if price else "N/A"
+            pnl = round((price - avg_price) * qty, 2) if price else "N/A"
+            sign = "+" if isinstance(pnl, float) and pnl >= 0 else ""
+            print(f"  {ticker}: {qty} shares | avg ${avg_price:.2f} | now {price_str} | value ${value} | P&L {sign}${pnl}")
+
+
+    def history_for(self, ticker):
+        if ticker not in self.holdings:
+            print(f"No history for {ticker}")
+            return
+        transactions = self.history.get_for_ticker(ticker)
+        print(f"Transaction history for {ticker}:")
+        for tx in transactions:
+            print(f"{tx.action} {tx.qty} shares at ${tx.price:.2f}")
+
+    def top(self, n):
+        pnl_list = []
+        for ticker, data in self.holdings.items():
+            price = self.get_market_price(ticker)
+            if price:
+                pnl = (price - data["avg_price"]) * data["qty"]
+                pnl_list.append((ticker, pnl))
+        pnl_list.sort(key=lambda x: x[1], reverse=True)
+        
+        print(f"\nTop {n} holdings by P&L:")
+        for i, (ticker, pnl) in enumerate(pnl_list[:n], 1):
+            sign = "+" if pnl >= 0 else ""
+            print(f" {i}. {ticker}: {sign}${pnl:.2f}")
+        
+if __name__ == "__main__":
+    p = StockPortfolio()
+    p.add("AAPL", 10, 150)
+    p.add("NVDA", 5, 800.0)
+    p.add("AAPL", 5, 160.0)
+    p.sell("TSLA", 1)
+    p.sell("AAPL", 20)
+    p.sell("NVDA", 5)
+    p.portfolio()
+    p.history_for("AAPL")
+    p.top(2)
+
 
