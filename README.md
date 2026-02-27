@@ -16,7 +16,7 @@
 
 | # | Project | Stack | Try it | Status |
 |---|---------|-------|--------|--------|
-| 01 | [Stock Portfolio Tracker](./stock-portfolio-tracker/) | Python · Alpha Vantage API · LinkedList · HashMap | [▶ Live demo](https://shevcodn.dev/#projects) | ✅ Done |
+| 01 | [Stock Portfolio Tracker](./stock-portfolio-tracker/) | Python · Alpha Vantage API · LinkedList · HashMap | [▶ Live demo](https://shevcodn.dev/#project-01) | ✅ Done |
 | 02 | TradeLedger API | FastAPI · PostgreSQL · SQLAlchemy | — | 🔜 p700 |
 | 03 | MarketPulse | WebSockets · Redis · React | — | 🔜 p800 |
 | 04 | DeployKit | Docker · GitHub Actions · Railway | — | 🔜 p900 |
@@ -65,7 +65,7 @@ python main.py
 
 ### Try it live
 
-**[▶ shevcodn.dev/#projects](https://shevcodn.dev/#projects)** — interactive terminal, no install needed
+**[▶ shevcodn.dev/#project-01](https://shevcodn.dev/#project-01)** — interactive terminal, no install needed
 
 ---
 
