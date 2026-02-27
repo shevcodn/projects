@@ -16,7 +16,7 @@
 
 | # | Project | Stack | Try it | Status |
 |---|---------|-------|--------|--------|
-| 01 | [Stock Portfolio Tracker](./stock-portfolio-tracker/) | Python · Alpha Vantage API · LinkedList · HashMap | [![Run on Replit](https://replit.com/badge/github/shevcodn/projects)](https://replit.com/github/shevcodn/projects) | ✅ Done |
+| 01 | [Stock Portfolio Tracker](./stock-portfolio-tracker/) | Python · Alpha Vantage API · LinkedList · HashMap | [▶ Live demo](https://shevcodn.dev/#projects) | ✅ Done |
 | 02 | Stock Portfolio API | FastAPI · PostgreSQL · SQLAlchemy | — | 🔜 p700 |
 | 03 | Real-time Dashboard | WebSockets · Redis · React | — | 🔜 p800 |
 | 04 | Microservice + CI/CD | Docker · GitHub Actions · Railway | — | 🔜 p900 |
@@ -63,12 +63,9 @@ python main.py
 
 > **Free API key:** [alphavantage.co](https://www.alphavantage.co/support/#api-key) — 30 seconds to get
 
-### Run in Browser (no install needed)
+### Try it live
 
-[![Run on Replit](https://replit.com/badge/github/shevcodn/projects)](https://replit.com/github/shevcodn/projects)
-
-> Click → Replit opens → hit **Run** → works immediately
-> *(uses fallback prices when market is closed or no API key)*
+**[▶ shevcodn.dev/#projects](https://shevcodn.dev/#projects)** — interactive terminal, no install needed
 
 ---
 
