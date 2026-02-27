@@ -205,7 +205,7 @@ if __name__ == "__main__":
         elif action == "history" and len(cmd) == 2:
             p.history_for(cmd[1].upper())
         elif action == "top" and len(cmd) == 2:
-            p.top(int(cmd[2]))
+            p.top(int(cmd[1]))
         else:
             print("Unknown command. Try: buy AAPL 5 | sell AAPL 3 | portfolio | history AAPL | top 3 | quit")
 
