@@ -1,0 +1,14 @@
+name: Mirror to GitLab
+on: [push, delete, create]
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Push to GitLab
+        run: |
+          git remote add gitlab https://shevcodn:${{ secrets.GITLAB_TOKEN }}@gitlab.com/shevcodn/projects.git
+          git push gitlab --all --force
+          git push gitlab --tags --force
