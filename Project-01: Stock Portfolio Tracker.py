@@ -43,9 +43,9 @@ class StockPortfolio:
         self.holdings = {}
         self.history = TransactionHistory()
 
-    def is_market_open(self, datetime):
+    def is_market_open(self):
         et = pytz.timezone('America/New_York')
-        now = datetime.now(et)
+        now = datetime.datetime.now(et)
         if now.weekday() >= 5:
             return False
         market_open = now.replace(hour=9, minute=30, second=0)
@@ -60,7 +60,7 @@ class StockPortfolio:
             if now - timestamp < CACHE_TTL:
                 return price
 
-        if not self.is_market_open(datetime.datetime):
+        if not self.is_market_open():
             if ticker in price_cache:
                 return price_cache[ticker][0]
             return None
@@ -80,11 +80,43 @@ class StockPortfolio:
 
     def add(self, ticker, qty, price):
         if ticker in self.holdings:
-            self.holdings[ticker] += qty
+            old_qty = self.holdings[ticker]["qty"]
+            old_avg = self.holdings[ticker]["avg_price"]
+            new_qty = old_qty + qty
+            new_avg = (old_avg * old_qty + price * qty) / new_qty
+            self.holdings[ticker] = {"qty": new_qty, "avg_price": new_avg}
         else:
-            self.holdings[ticker] = qty
+            self.holdings[ticker] = {"qty": qty, "avg_price": price}
         self.history.add("BUY", ticker, qty, price)
+        print(f"Bought {qty} shares of {ticker} at ${price:.2f}")
+
 
     def sell(self, ticker, qty):
-        if ticker not in self.holdings or self.holdings[ticker] < qty:
-            raise ValueError("Not enough shares to sell")
+        if ticker not in self.holdings:
+            print(f"You don't own {ticker}")
+            return
+        if self.holdings[ticker]["qty"] < qty:
+            print(f"Only have {self.holdings[ticker]['qty']} shares of {ticker}")
+            return
+        self.holdings[ticker]["qty"] -= qty
+        if self.holdings[ticker]["qty"] == 0:
+            del self.holdings[ticker]
+        self.history.add("SELL", ticker, qty, self.get_market_price(ticker))
+        print(f"Sold {qty} shares of {ticker} at ${self.get_market_price(ticker):.2f}")
+
+
+    def portfolio(self):
+        print("Current Portfolio:")
+        for ticker, qty in self.holdings.items():
+            transactions = self.history.get_for_ticker(ticker)
+            total_cost = sum(tx.price * tx.qty for tx in transactions if tx.action == "BUY")
+            total_qty = sum(tx.qty for tx in transactions if tx.action == "BUY")
+            avg_price = total_cost / total_qty if total_qty > 0 else 0
+
+            price = self.get_market_price(ticker)
+            value = price * qty if price else "N/A"
+            print(f"{ticker}: {qty} shares, Current price: ${price:.2f} "
+                  f"Value: ${value if value != 'N/A' else 'N/A'}")
+            pnl = (price - avg_price) * qty if price else "N/A"
+            print(f"  P&L: ${pnl if pnl != 'N/A' else 'N/A'}")
+
