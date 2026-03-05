@@ -1,12 +1,12 @@
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=18&duration=3000&pause=1000&color=00FF88&center=true&vCenter=true&width=600&lines=Portfolio+Projects;Python+%C2%B7+FastAPI+%C2%B7+PostgreSQL+%C2%B7+Docker;Built+during+1000-task+curriculum" alt="Typing SVG" />
+<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=18&duration=3000&pause=1000&color=00FF88&center=true&vCenter=true&width=600&lines=Portfolio+Projects;Python+%C2%B7+Rich+%C2%B7+Alpha+Vantage+%C2%B7+FastAPI;Built+during+1000-task+curriculum" alt="Typing SVG" />
 
 ### Denis Shevchenko · [shevcodn.dev](https://shevcodn.dev)
 
 [![Python](https://img.shields.io/badge/Python-3.12-00ff88?style=flat-square&logo=python&logoColor=black)](https://python.org)
 [![Status](https://img.shields.io/badge/Status-Active_Development-00ff88?style=flat-square)](https://github.com/shevcodn/projects)
-[![Projects](https://img.shields.io/badge/Projects-1_of_7-00ff88?style=flat-square)](https://github.com/shevcodn/projects)
+[![Projects](https://img.shields.io/badge/Projects-2_of_7-00ff88?style=flat-square)](https://github.com/shevcodn/projects)
 
 </div>
 
@@ -16,8 +16,8 @@
 
 | # | Project | Stack | Try it | Status |
 |---|---------|-------|--------|--------|
-| 01 | [Stock Portfolio Tracker](./stock-portfolio-tracker/) | Python · Alpha Vantage API · LinkedList · HashMap | [▶ Live demo](https://shevcodn.dev/#project-01) | ✅ Done |
-| 02 | TradeLedger API | FastAPI · PostgreSQL · SQLAlchemy | — | 🔜 p700 |
+| 01 | [Stock Portfolio Tracker](https://github.com/shevcodn/projects) | Python · Alpha Vantage API · LinkedList · HashMap | [▶ Live demo](https://shevcodn.dev/#project-01) | ✅ Done |
+| 02 | [TradeLedger](https://github.com/shevcodn/tradeledger) | Python · Rich · Alpha Vantage · LinkedList · Heap | [▶ Live demo](https://shevcodn.dev/#project-02) | ✅ Done |
 | 03 | MarketPulse | WebSockets · Redis · React | — | 🔜 p800 |
 | 04 | DeployKit | Docker · GitHub Actions · Railway | — | 🔜 p900 |
 | 05 | AuthVault | JWT · OAuth · Railway deploy | — | 🔜 p960 |
@@ -69,6 +69,39 @@ python main.py
 
 ---
 
+
+---
+
+## Project-02: TradeLedger
+
+> **Python CLI app** — advanced trade journal with Rich UI. Track any ticker, log buy/sell, monitor P&L, set price alerts.
+
+```
+Stack:   Python · Rich · Alpha Vantage API · LinkedList · Heap · Binary Search
+Balance: $25,000 virtual  |  Any ticker
+```
+
+### Features
+
+| Command | Description |
+|---------|-------------|
+| `buy TICKER QTY` | Buy at real-time price |
+| `sell TICKER QTY` | Sell with P&L calculation |
+| `portfolio` | Rich table: avg · current · P&L % |
+| `search TICKER` | Binary search in history |
+| `top N` | Top N trades by P&L via Heap |
+| `alert TICKER PRICE` | Set price alert |
+
+### Quick Start
+
+```bash
+git clone https://github.com/shevcodn/tradeledger
+cd tradeledger
+cp .env.example .env
+pip install -r requirements.txt
+python main.py
+```
+
 <div align="center">
 
 *Built during p1→p1000 Python engineering curriculum · Toronto 2026*
@@ -76,3 +109,4 @@ python main.py
 [![Website](https://img.shields.io/badge/shevcodn.dev-00ff88?style=flat-square&logo=vercel&logoColor=black)](https://shevcodn.dev)
 
 </div>
+
