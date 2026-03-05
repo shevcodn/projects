@@ -67,53 +67,6 @@ python main.py
 
 **[▶ shevcodn.dev/#project-01](https://shevcodn.dev/#project-01)** — interactive terminal, no install needed
 
----
-
-## Project-02: TradeLedger
-
-> **Python CLI app** — advanced trade journal with Rich UI. Track any ticker, log buy/sell, monitor P&L, set price alerts, rank top trades by profit.
-
-```
-Stack:   Python · Rich · Alpha Vantage API · LinkedList · Heap · Binary Search
-Balance: $25,000 virtual
-Tickers: Any ticker (user inputs)
-Cache:   Shared with Project-01 (TTL 65 min, one API key)
-```
-
-### Features
-
-| Command | Description |
-|---------|-------------|
-| `buy TICKER QTY` | Buy at real-time price |
-| `sell TICKER QTY` | Sell with P&L calculation |
-| `portfolio` | Rich table: avg price · current price · P&L % |
-| `search TICKER` | Binary search in transaction history |
-| `top N` | Top N trades by profit via Heap |
-| `alert TICKER PRICE` | Set price drop alert |
-| `history` | Full transaction log via LinkedList |
-
-### Data Structures
-
-- **LinkedList** — transaction history, newest → oldest
-- **HashMap** — `O(1)` holdings lookup by ticker
-- **Heap** — `O(n log k)` top-N trades by P&L
-- **Binary Search** — `O(log n)` search by ticker or date
-
-### Quick Start (local)
-
-```bash
-git clone https://github.com/shevcodn/tradeledger
-cd tradeledger
-cp .env.example .env
-pip install -r requirements.txt
-python main.py
-```
-
-> **Free API key:** [alphavantage.co](https://www.alphavantage.co/support/#api-key) — 30 seconds to get
-
-### Try it live
-
-**[▶ shevcodn.dev/#project-02](https://shevcodn.dev/#project-02)** — interactive terminal, no install needed
 
 ---
 
@@ -121,6 +74,7 @@ python main.py
 
 *Built during p1→p1000 Python engineering curriculum · Toronto 2026*
 
-[![Website](https://img.shields.io/badge/shevcodn.dev-00ff88?style=flat-square&logo=vercel&logoColor=black)](https://shevcodn.dev)
+[\![Website](https://img.shields.io/badge/shevcodn.dev-00ff88?style=flat-square&logo=vercel&logoColor=black)](https://shevcodn.dev)
+[\![Full Roadmap](https://img.shields.io/badge/Full_Roadmap-all_7_projects-00ff88?style=flat-square&logo=github&logoColor=black)](https://github.com/shevcodn/roadmap)
 
 </div>
