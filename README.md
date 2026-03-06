@@ -16,7 +16,7 @@
 
 | # | Project | Stack | Try it | Status |
 |---|---------|-------|--------|--------|
-| 01 | [Stock Portfolio Tracker](./stock-portfolio-tracker/) | Python · Alpha Vantage API · LinkedList · HashMap | [▶ Live](https://shevcodn.dev/#project-01) | ✅ Done |
+| 01 | [Stock Portfolio Tracker](./stock-portfolio-tracker/) | Python · yfinance · Alpha Vantage · LinkedList · HashMap | [▶ Live](https://shevcodn.dev/#project-01) | ✅ Done |
 | 02 | [TradeLedger](https://github.com/shevcodn/tradeledger) | Python · Rich · Alpha Vantage · LinkedList · Heap | [▶ Live](https://shevcodn.dev/#project-02) | ✅ Done |
 | 03 | MarketPulse | WebSockets · Redis · React | — | 🔜 p800 |
 | 04 | DeployKit | Docker · GitHub Actions · Railway | — | 🔜 p900 |
@@ -31,7 +31,7 @@
 > **Python CLI app** — track your stock portfolio in the terminal with real-time prices.
 
 ```
-Stack:   Python · Alpha Vantage API · LinkedList · HashMap
+Stack:   Python · yfinance · Alpha Vantage · LinkedList · HashMap
 Balance: $10,000 virtual
 Tickers: AAPL · NVDA · TSLA · MSFT · GOOGL · AMZN · META · AMD · NFLX
 ```
@@ -61,7 +61,7 @@ pip install -r ../requirements.txt
 python main.py
 ```
 
-> **Free API key:** [alphavantage.co](https://www.alphavantage.co/support/#api-key)
+> **Prices:** yfinance (Yahoo Finance) — primary. Alpha Vantage — fallback (optional API key).
 
 ### Try it live
 
