@@ -1,11 +1,11 @@
 import os
 import requests
 import time
+import json
 import pytz
 import datetime
 from dotenv import load_dotenv
 
-price_cache = {}
 CACHE_TTL = 3900
 
 FALLBACK_PRICES = {
@@ -22,6 +22,33 @@ FALLBACK_PRICES = {
 
 load_dotenv()
 API_KEY = os.getenv("ALPHA_VANTAGE_KEY")
+SHARED_CACHE_PATH = os.getenv("SHARED_CACHE_PATH", "../../shared/price_cache.json")
+
+_redis = None
+
+def _get_redis():
+    global _redis
+    if _redis is None:
+        url = os.getenv("UPSTASH_REDIS_URL")
+        token = os.getenv("UPSTASH_REDIS_TOKEN")
+        if url and token:
+            from upstash_redis import Redis
+            _redis = Redis(url=f"https://{url}", token=token)
+    return _redis
+
+def _load_cache():
+    try:
+        with open(SHARED_CACHE_PATH, 'r') as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
+
+def _save_cache(cache):
+    try:
+        with open(SHARED_CACHE_PATH, 'w') as f:
+            json.dump(cache, f, indent=2)
+    except OSError:
+        pass
 
 class Transactions:
     def __init__(self, action, ticker, qty, price):
@@ -66,29 +93,47 @@ class StockPortfolio:
         return market_open <= now <= market_close
 
     def get_market_price(self, ticker):
+        r = _get_redis()
         now = time.time()
 
-        if ticker in price_cache:
-            price, timestamp = price_cache[ticker]
-            if now - timestamp < CACHE_TTL:
+        if r:
+            try:
+                cached = r.get(f"price:{ticker}")
+                if cached is not None:
+                    return float(cached)
+            except Exception:
+                pass
+            if not self.is_market_open():
+                return FALLBACK_PRICES.get(ticker)
+            try:
+                url = f'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={ticker}&apikey={API_KEY}'
+                response = requests.get(url, timeout=5)
+                data = response.json()
+                price = float(data["Global Quote"]["05. price"])
+                r.set(f"price:{ticker}", str(price), ex=CACHE_TTL)
                 return price
+            except Exception:
+                return FALLBACK_PRICES.get(ticker)
 
+        cache = _load_cache()
+        if ticker in cache and now - cache[ticker]["time"] < CACHE_TTL:
+            return cache[ticker]["price"]
         if not self.is_market_open():
-            if ticker in price_cache:
-                return price_cache[ticker][0]
+            if ticker in cache:
+                return cache[ticker]["price"]
             return FALLBACK_PRICES.get(ticker)
-
         try:
             url = f'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={ticker}&apikey={API_KEY}'
             response = requests.get(url, timeout=5)
             data = response.json()
             price = float(data["Global Quote"]["05. price"])
-            price_cache[ticker] = (price, now)
+            cache[ticker] = {"price": price, "time": now}
+            _save_cache(cache)
             return price
-        except Exception:
-            if ticker in price_cache:
-                return price_cache[ticker][0]
-            return None
+        except (requests.RequestException, KeyError, ValueError):
+            if ticker in cache:
+                return cache[ticker]["price"]
+            return FALLBACK_PRICES.get(ticker)
 
 
     def add(self, ticker, qty, price):

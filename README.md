@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=18&duration=3000&pause=1000&color=00FF88&center=true&vCenter=true&width=600&lines=Portfolio+Projects;Python+%C2%B7+Rich+%C2%B7+Alpha+Vantage+%C2%B7+FastAPI;Built+during+1000-task+curriculum" alt="Typing SVG" />
+<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=18&duration=3000&pause=1000&color=00FF88&center=true&vCenter=true&width=600&lines=Portfolio+Projects;Python+%C2%B7+Alpha+Vantage+%C2%B7+LinkedList+%C2%B7+HashMap+%C2%B7+Rich;Built+during+1000-task+curriculum" alt="Typing SVG" />
 
 ### Denis Shevchenko · [shevcodn.dev](https://shevcodn.dev)
 
@@ -16,7 +16,7 @@
 
 | # | Project | Stack | Try it | Status |
 |---|---------|-------|--------|--------|
-| 01 | [Stock Portfolio Tracker](https://github.com/shevcodn/projects) | Python · Alpha Vantage API · LinkedList · HashMap | [▶ Live demo](https://shevcodn.dev/#project-01) | ✅ Done |
+| 01 | [Stock Portfolio Tracker](./stock-portfolio-tracker/) | Python · Alpha Vantage API · LinkedList · HashMap | [▶ Live demo](https://shevcodn.dev/#project-01) | ✅ Done |
 | 02 | [TradeLedger](https://github.com/shevcodn/tradeledger) | Python · Rich · Alpha Vantage · LinkedList · Heap | [▶ Live demo](https://shevcodn.dev/#project-02) | ✅ Done |
 | 03 | MarketPulse | WebSockets · Redis · React | — | 🔜 p800 |
 | 04 | DeployKit | Docker · GitHub Actions · Railway | — | 🔜 p900 |
@@ -31,8 +31,8 @@
 > **Python CLI app** — track your stock portfolio in the terminal with real-time prices.
 
 ```
-Stack:   Python · Alpha Vantage API · LinkedList · HashMap
-Balance: $10,000 virtual
+Stack:  Python · Alpha Vantage API · LinkedList · HashMap
+Start:  $10,000 virtual balance
 Tickers: AAPL · NVDA · TSLA · MSFT · GOOGL · AMZN · META · AMD · NFLX
 ```
 
@@ -56,7 +56,7 @@ Tickers: AAPL · NVDA · TSLA · MSFT · GOOGL · AMZN · META · AMD · NFLX
 ```bash
 git clone https://github.com/shevcodn/projects
 cd projects/stock-portfolio-tracker
-cp .env.example .env
+cp .env.example .env        # add your Alpha Vantage key
 pip install -r ../requirements.txt
 python main.py
 ```
@@ -67,14 +67,13 @@ python main.py
 
 **[▶ shevcodn.dev/#project-01](https://shevcodn.dev/#project-01)** — interactive terminal, no install needed
 
-
 ---
 
 <div align="center">
 
 *Built during p1→p1000 Python engineering curriculum · Toronto 2026*
 
-[\![Website](https://img.shields.io/badge/shevcodn.dev-00ff88?style=flat-square&logo=vercel&logoColor=black)](https://shevcodn.dev)
-[\![Full Roadmap](https://img.shields.io/badge/Full_Roadmap-all_7_projects-00ff88?style=flat-square&logo=github&logoColor=black)](https://github.com/shevcodn/roadmap)
+[![Website](https://img.shields.io/badge/shevcodn.dev-00ff88?style=flat-square&logo=vercel&logoColor=black)](https://shevcodn.dev)
+[![All Projects](https://img.shields.io/badge/All_Projects-00ff88?style=flat-square&logo=github&logoColor=black)](https://github.com/shevcodn/projects)
 
 </div>
